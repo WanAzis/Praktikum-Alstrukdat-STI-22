@@ -1,0 +1,72 @@
+Program ANAGRAM
+{ Menghitung kata yang anagram dengan kata pertama dari sebuah pita karakter
+  lalu menuliskan hasilnya ke layar }
+
+KAMUS
+	USE MesinKata3
+	
+	nAnagram : integer { jumlah kata yang anagram dengan kata pertama }
+	KataPertama : Kata { menyimpan kata pertama }
+	
+	procedure CopyKata (input k1: kata, output k2: Kata)
+	{ Menyalin kata k1 kedalam k2
+	  I.S. : k1 terdefinisi
+	  F.S. : k2 menyimpan isi dan panjang kata yang sama seperti k1 }
+	
+	function isKataAnagram (k1, k2: kata) -> boolean
+	{ menghasilkan true jika k2 merupakan anagram dari k1 }
+	
+ALGORITMA
+	initAkses
+	if (cc = MARK) then
+		output("Pita tidak terdapat anagram")
+	else { cc != MARK }
+		advkata
+		CopyKata (currentkata, KataPertama)
+		nAnagram <- 0
+		while (cc != MARK) do
+			if isKataAnagram(KataPertama, currentkata) then
+				nAnagram <- nAnagram + 1
+			advkata
+		{ cc = MARK }
+		output(nAnagram)
+
+function isKataAnagram (k1, k2: kata) -> boolean
+{ menghasilkan true jika k2 merupakan anagram dari k1 }
+	
+KAMUS LOKAL
+	i : integer
+	found : boolean
+	
+	function Count(C: character, K: kata) -> integer
+	{ menghasilkan banyaknya C dalam K }
+	
+ALGORITMA
+	if (k1.length != k2.length) then
+		-> false
+	else { k1.length = k2.length }
+		i <- 0
+		while (i < k1.length) and (count(k1.buffer[i],k1) = count(k2.buffer[i],k2)) do
+			i <- i + 1
+		{ i >= k1.length or count(k1.buffer[i],k1) = count(k2.buffer[i],k2) }
+		if i = k1.length then
+			-> true
+		else { i < k1.length }
+			-> false
+
+function Count(C: character, K: kata) -> integer
+{ menghasilkan banyaknya C dalam K }
+
+KAMUS LOKAL
+	i : integer
+	nC : integer
+
+ALGORITMA
+	i <- 0
+	nC <- 0
+	while i < k.length do
+		if k.buffer[i] = C then
+			nC <- nC + 1	
+		i <- i + 1
+	{ i = k1.length }
+	-> nC
